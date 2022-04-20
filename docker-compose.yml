@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  app:
+    restart: always
+    container_name: food_api
+    image: food_api_image
+    build:
+      context: .
+      dockerfile: app.dockerfile
+    ports:
+      - "3200:3200"
