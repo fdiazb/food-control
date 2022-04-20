@@ -1,0 +1,61 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy a Portainer stack
+        # You may pin to the exact commit or the version.
+        # uses: carlrygart/portainer-stack-deploy@524466cd7956cf9dd1ad2a0554e3cc361b3dabfa
+        uses: carlrygart/portainer-stack-deploy@v1.2.0
+        with:
+          # Portainer host, eg. https://myportainer.instance.com
+          portainer-host: http://154.12.244.158:9000/#/auth
+          # Username for the Portainer login. NOTE: Do not use admin account! Create a new CI specific login
+          username: ci
+          # Password for the Portainer login
+          password: 737454
+          # ID of the swarm. Only required if you deploy to a swarm.
+          # swarm-id: # optional
+          # ID of the Portainer node to deploy to
+          # endpoint-id: # optional
+          # Name for the Portainer stack
+          #stack-name: 
+          # The path to the docker-compose stack stack definition file, eg. stack-definition.yml
+          #stack-definition: 
+          # If given, these variables will be replaced in docker-compose file by handlebars
+          template-variables: # optional
+          # The URI of the container image to insert into the stack definition, eg. docker.pkg.github.com/username/repo/master
+          image: # optional
+
+
